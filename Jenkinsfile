@@ -15,7 +15,7 @@ node{
                    sh """ 
                        docker run --rm -v \${PWD}:${GOPATH}  -w ${GOPATH} \
                        -e GO111MODULE=on --network=host \
-                       golang apk add --update git && go test -cover ./...
+                       golang  && go test -cover ./...
                      """
 
                    sh """
