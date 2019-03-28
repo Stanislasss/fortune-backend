@@ -28,6 +28,7 @@ build: clean test ## [clean test] Build binary file
 	docker build -t thiagotr/fortune-backend .
 
 docker: ## Build Docker image
+	docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASSWORD}
 	docker push thiagotr/fortune-backend
 
 help:
