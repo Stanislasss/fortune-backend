@@ -1,0 +1,12 @@
+language: go
+
+sudo: required
+
+services:
+  - docker
+  - mongo
+
+go:
+  - "1.12.x"
+
+script: make all
