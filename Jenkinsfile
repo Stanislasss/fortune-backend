@@ -8,7 +8,7 @@ node{
         stages {
             stage('Unit Test') {
                 steps {
-                    docker run --rm ${PWD}:/go/src/github.com/thiagotrennepohl/fortune-backend golang go test ./...
+                    docker run --rm \${PWD}:/go/src/github.com/thiagotrennepohl/fortune-backend golang go test ./...
                 }
             }
             stage('Docker build') {
