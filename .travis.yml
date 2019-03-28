@@ -13,7 +13,6 @@ go:
   - "1.12.x"
 
 before_script:
-  - sleep 60
-  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+  - sleep 15
 
 script: make ci
