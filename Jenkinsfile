@@ -5,7 +5,6 @@ node{
             DOCKER_LOGIN     = credentials('docker-login')
             DOCKER_PASSWORD = credentials('docker-password')
         }
-        stages {
             stage('Unit Test') {
                 steps {
                    sh """ docker run --rm \${PWD}:/go/src/github.com/thiagotrennepohl/fortune-backend golang go test ./..."""
@@ -21,4 +20,3 @@ node{
                 }
             }
         }
-    }
