@@ -1,0 +1,10 @@
+version: '3'
+services:
+  fortune-app-backend:
+    image: fortune-backend
+    environment:
+      MONGO_ADDR: "mongodb://mongo.example.com:27017/fortune-messages"
+      VIRTUAL_HOST: "fortune.example.com"
+      VIERUAL_PORT: 4000
+      CERT_NAME: letsencrypt
+      HTTPS_METHOD: redirect

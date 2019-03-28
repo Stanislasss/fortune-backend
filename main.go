@@ -1,14 +1,26 @@
 package main
 
 import (
+	"os"
+
 	"github.com/fortune-backend/fortune"
 	"github.com/globalsign/mgo"
 	"github.com/labstack/echo"
 )
 
+var mongoDBConnectionString string
+
+func init() {
+	if mongodbconnString, ok := os.LookupEnv("MONGO_ADDR"); ok {
+		mongoDBConnectionString = mongodbconnString
+	} else {
+		mongoDBConnectionString = "mongodb://localhost:27017"
+	}
+}
+
 func main() {
 
-	sess, err := mgo.Dial("mongodb://localhost:27017/fortune")
+	sess, err := mgo.Dial(mongoDBConnectionString)
 	if err != nil {
 		panic(err)
 	}

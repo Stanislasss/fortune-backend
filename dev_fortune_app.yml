@@ -1,0 +1,11 @@
+version: '3'
+services:
+  fortune-app-backend:
+    image: fortune-backend
+    environment:
+      MONGO_ADDR: "mongodb://fortune_backend_mongo:27017/fortune-messages"
+    ports:
+      4001:4001
+      
+  fortune_backend_mongo:
+    image: mongo
