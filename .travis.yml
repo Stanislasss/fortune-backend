@@ -13,6 +13,6 @@ go:
   - "1.12.x"
 
 before_script:
-  - sleep 15
+  - sleep 300
 
 script: make ci
