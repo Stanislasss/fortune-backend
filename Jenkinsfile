@@ -8,7 +8,7 @@ node{
             stage('Unit Test') {
                     
                 
-                   sh """ docker run --rm -v \${PWD}:${GOPATH}  -w ${GOPATH} golang:alpine go test ./..."""
+                   sh """ docker run --rm -v \${PWD}:${GOPATH}  -w ${GOPATH} golang:alpine apk add --update git && go test ./..."""
                 
             }
             stage('Docker build') {
