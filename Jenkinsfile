@@ -9,7 +9,7 @@ node{
                     
 
                     sh """
-                        docker run -d --rm --name=test-mongo --network=host
+                        docker run -d --rm --name=test-mongo --network=host mongo
                        """
                 
                    sh """ 
@@ -17,7 +17,7 @@ node{
                        -e GO111MODULE=on --network=host \
                        golang apk add --update git && go test -cover ./...
                      """
-                     
+
                    sh """
                        docker rm -f test-mongo || true 
                       """
