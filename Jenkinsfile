@@ -3,8 +3,10 @@ node{
 
           def DOCKER_LOGIN     = credentials('docker-login')
           def DOCKER_PASSWORD = credentials('docker-password')
+          def GOPATH = "/go/src/github.com/thiagotrennepohl/fortune-backend"
+          
             stage('Unit Test') {
-                    def GOPATH="/go/src/github.com/thiagotrennepohl/fortune-backend"
+                    
                 
                    sh """ docker run --rm -v \${PWD}:\${GOPATH}  -w \${GOPATH} go test ./..."""
                 
