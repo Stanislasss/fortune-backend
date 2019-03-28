@@ -7,7 +7,7 @@ node{
 
             stage('Unit Test') {
                     
-                try() {
+                try {
                     sh """
                         docker run -d --rm --name=test-mongo --network=host mongo
                        """
