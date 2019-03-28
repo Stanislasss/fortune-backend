@@ -1,13 +1,12 @@
 node{
   checkout scm
 
-    environment {
-            DOCKER_LOGIN     = credentials('docker-login')
-            DOCKER_PASSWORD = credentials('docker-password')
-        }
+          def DOCKER_LOGIN     = credentials('docker-login')
+          def DOCKER_PASSWORD = credentials('docker-password')
             stage('Unit Test') {
+                    def GOPATH="/go/src/github.com/thiagotrennepohl/fortune-backend"
                 
-                   sh """ docker run --rm -v \${PWD}:/go/src/github.com/thiagotrennepohl/fortune-backend golang go test ./..."""
+                   sh """ docker run --rm -v \${PWD}:\${GOPATH}  -w \${GOPATH} go test ./..."""
                 
             }
             stage('Docker build') {
