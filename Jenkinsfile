@@ -7,13 +7,13 @@ node{
 
             stage('Unit Test') {
                     
-
+                try() {
                     sh """
                         docker run -d --rm --name=test-mongo --network=host mongo
                        """
                 
                    sh """ 
-                       docker run --rm -v \${PWD}:${GOPATH}  -w ${GOPATH} \
+                       docker run --rm -v \${PWD}:${GOPATH} -w ${GOPATH} \
                        -e GO111MODULE=on --network=host \
                        golang  && go test -cover ./...
                      """
@@ -21,6 +21,10 @@ node{
                    sh """
                        docker rm -f test-mongo || true 
                       """
+                }
+                catch(e){
+                    sh """ docker rm -f test-mongo """
+                }
                 
             }
             stage('Docker build') {
