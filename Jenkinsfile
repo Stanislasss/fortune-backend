@@ -7,7 +7,7 @@ node{
         }
             stage('Unit Test') {
                 
-                   sh """ docker run --rm \${PWD}:/go/src/github.com/thiagotrennepohl/fortune-backend golang go test ./..."""
+                   sh """ docker run --rm -v \${PWD}:/go/src/github.com/thiagotrennepohl/fortune-backend golang go test ./..."""
                 
             }
             stage('Docker build') {
