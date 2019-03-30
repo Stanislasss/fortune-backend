@@ -29,5 +29,5 @@ jobs:
     - stage: deploy
       script:
         - make create-kube-config
-        - make create-kube-config
+        - make install-kubectl
         - make blue-green
