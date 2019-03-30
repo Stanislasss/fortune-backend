@@ -18,7 +18,7 @@ install-kubectl: ## Remove old binary
 	sudo mv ./kubectl /usr/local/bin/kubectl
 
 blue-green: ## Performs a blue greeen deployment
-	./deployer.sh
+	./deployer.sh --set-deployment production
 
 ci: clean test build docker install-kubectl create-kube-config blue-green ## Continous Integration Steps
 
