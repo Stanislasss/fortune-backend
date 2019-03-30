@@ -1,6 +1,6 @@
 package fortune
 
-import "github.com/fortune-backend/models"
+import "github.com/thiagotrennepohl/fortune-backend/models"
 
 //MessageRepository stands for "database" operations
 type FortuneRepository interface {

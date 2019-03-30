@@ -6,10 +6,10 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/fortune-backend/fortune"
-	"github.com/fortune-backend/models"
+	"github.com/thiagotrennepohl/fortune-backend/fortune"
+	"github.com/thiagotrennepohl/fortune-backend/models"
 
-	"github.com/fortune-backend/mocks"
+	"github.com/thiagotrennepohl/fortune-backend/mocks"
 )
 
 var (

@@ -3,9 +3,9 @@ package main
 import (
 	"os"
 
-	"github.com/fortune-backend/fortune"
 	"github.com/globalsign/mgo"
 	"github.com/labstack/echo"
+	"github.com/thiagotrennepohl/fortune-backend/fortune"
 )
 
 var mongoDBConnectionString string

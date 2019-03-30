@@ -3,7 +3,7 @@ package fortune
 import (
 	"net/http"
 
-	"github.com/fortune-backend/models"
+	"github.com/thiagotrennepohl/fortune-backend/models"
 	"github.com/labstack/echo"
 )
 

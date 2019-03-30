@@ -3,7 +3,7 @@ package fortune
 import (
 	"encoding/json"
 
-	"github.com/fortune-backend/models"
+	"github.com/thiagotrennepohl/fortune-backend/models"
 	"github.com/globalsign/mgo"
 )
 

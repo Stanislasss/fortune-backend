@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/fortune-backend/models"
+	"github.com/thiagotrennepohl/fortune-backend/models"
 )
 
 const invalidMessageIdPattern = `[^A-Za-z0-9\-]`

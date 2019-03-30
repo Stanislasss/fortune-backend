@@ -1,7 +1,7 @@
 package mocks
 
 import (
-	"github.com/fortune-backend/models"
+	"github.com/thiagotrennepohl/fortune-backend/models"
 )
 
 type fortuneRepositoryMock struct {
