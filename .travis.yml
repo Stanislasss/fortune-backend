@@ -12,7 +12,22 @@ services:
 go:
   - "1.12.x"
 
-before_script:
-  - sleep 15
 
-script: make ci
+stages:
+  - test
+  - build
+  - deploy
+
+jobs:
+  include:
+    - stage: test
+      before_script:
+        - sleep 15
+      script: make test
+    - stage: build
+      script: docker
+    - stage: deploy
+      script:
+        - make create-kube-config
+        - make create-kube-config
+        - make blue-green
