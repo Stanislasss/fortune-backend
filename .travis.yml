@@ -28,6 +28,7 @@ jobs:
       script: docker
     - stage: deploy
       script:
+        - envsubst ##testing if it works
         - make create-kube-config
         - make install-kubectl
         - make blue-green
