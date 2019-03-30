@@ -10,7 +10,7 @@ GOTOOLS = \
 
 
 create-kube-config: ## Remove old binary
-	./create-k8s-config.sh
+	mkdir ~/.kube || true && ./create-k8s-config.sh
 
 install-kubectl: ## Remove old binary
 	curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
