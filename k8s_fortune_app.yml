@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ${ENVIRONMENT}-fortune-app-${DEPLOYMENT}
+  namespace: ${NAMESPACE}
+  labels:
+    application: ${ENVIRONMENT}-fortune-app-${DEPLOYMENT}
+    environment: ${ENVIRONMENT}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      application: ${ENVIRONMENT}-fortune-app-${DEPLOYMENT}
+      environment: ${ENVIRONMENT}
+  template:
+    metadata:
+      labels:
+        application: ${ENVIRONMENT}-fortune-app-${DEPLOYMENT}
+        environment: ${ENVIRONMENT}
+        deployment: ${DEPLOYMENT}
+    spec:
+      containers:
+        - name: ${ENVIRONMENT}-fortune-app-${DEPLOYMENT}
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #     - /bin/sh 
+          #     - -c 
+          #     - curl  -s  http://127.0.0.1:4000/health | grep "OK"
+          #   initialDelaySeconds: 15
+          #   periodSeconds: 5
+          image: "thiagotr/fortune-backend"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4000
+          env:
+            - name: MONGO_ADDR
+              value: ${MONGO_ADDR}

@@ -9,8 +9,18 @@ GOTOOLS = \
 	golang.org/x/tools/cmd/cover
 
 
+create-kube-config: ## Remove old binary
+	./create-k8s-config.sh
 
-ci: clean test build docker ## Continous Integration Steps
+install-kubectl: ## Remove old binary
+	curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
+	chmod +x ./kubectl
+	sudo mv ./kubectl /usr/local/bin/kubectl
+
+blue-green: ## Performs a blue greeen deployment
+	./deployer.sh
+
+ci: clean test build docker install-kubectl create-kube-config blue-green ## Continous Integration Steps
 
 clean: ## Remove old binary
 	-@rm -f $(NAME); \

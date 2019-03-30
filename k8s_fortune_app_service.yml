@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  namespace: ${NAMESPACE}
+  labels:
+    application: ${ENVIRONMENT}-fortune-app
+    environment: ${ENVIRONMENT}
+  name: ${ENVIRONMENT}-fortune-app
+  selfLink: /api/v1/namespaces/default/services/${NAMESPACE}-fortune-app
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 4000
+    protocol: TCP
+    targetPort: 4000
+  selector:
+    application: ${ENVIRONMENT}-fortune-app-${DEPLOYMENT}
+    environment: ${ENVIRONMENT}
+    deployment: ${DEPLOYMENT}
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: production-fortune-app
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    certmanager.k8s.io/cluster-issuer: "letsencrypt-default"
+    kubernetes.io/tls-acme: "true"
+    certmanager.k8s.io/acme-challenge-type: http01
+spec:
+  tls:
+  - hosts:
+    - app.fortune.opsadventures.com
+    secretName: app.fortune.opsadventures.com
+  rules:
+  - host: "app.fortune.opsadventures.com"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ${ENVIRONMENT}-fortune-app
+          servicePort: 4000
