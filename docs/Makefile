@@ -17,7 +17,7 @@ build: dep
 	@cat $(DOC_SRC)/models.yml >> $(DOC_FILE)
 	
 	# @node_modules/redoc-cli/index.js validate $(DOC_FILE)
-	@node_modules/redoc-cli/index.js bundle	-t static/template.hbs --options option.hideLoading $(DOC_FILE) --output ../assets/docs.html
+	@node_modules/redoc-cli/index.js bundle	-t static/template.hbs --options option.hideLoading $(DOC_FILE) --output ../assets/docs.tmpl
 
 serve: build
 	@node_modules/redoc-cli/index.js serve $(DOC_FILE)
