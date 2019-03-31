@@ -133,27 +133,34 @@ I know that kubernetes has StatefulSets and is great in keeping services separat
 
 But I never ran stateful services on kubernetes before and I think it might be dangerous if not configured very carefully, because it's not a machine or volume you can siimply delete and deploy again, sometimes many services are relying on the same mongodb. And not less important, replicaset elections can be tricky, so you need to be careful to not ruin your data.
 
-Keeping mongodb in a isolated machine with ssd or io1 diks is great because you can easily set a disk for journal, one for logs and another one for data (to avoid write and read concurrency).
+Keeping mongodb in a isolated machine with ssd or io1 diks is safe, because you can easily set a disk for journal, one for logs and another one for data (to avoid write and read concurrency).
 
 ### Prometheus and Grafana
 
-They are also stateful applications, and for this reason they are running in a separated instance on AWS as well, Prometheus configurarion is being created by Ansible and currently all scrape configs "automated".
+They are also stateful applications, and for this reason they are running in a separated instance on AWS as well, Prometheus configurarion is being created by Ansible and currently all scrape configs are "automated".
 
-Kubernetes scrape config is consuming Kubernetes api (also a service account for this) and MongoDB exporter and NodeExporter are being "discovered" using Ec2 discovery configurations.
+Kubernetes scrape config is consuming Kubernetes API (also a service account for this) and MongoDB exporter and NodeExporter are being "discovered" using Ec2 discovery configurations.
 
-### Why Ansible
 
+# Fortune Scrapper
+
+More info about the project can be found [here](https://github.com/thiagotrennepohl/fortune-scrapper)
+
+
+# Fortune Infra / Ansible
+
+More info about infrastructure can be found [here](https://github.com/thiagotrennepohl/fortune-infra)
 
 
 # What I would like to have done
 
-- First of all, deploying a **Graylogs** or used a managed logs service, I've been using **Graylogs** for a long time and it's great, I didn't hav a great expeience using ELK or Logentrie, but they are nice as well, but you can easily create alerts for slack, graphs, filter incoming logs, create extraction rules and also processing pipelines, it really makes easier to read logs.
+- First of all, deploying a **Graylogs** or have used a managed logs service. I've been using **Graylogs** for more than 3 year and it's very easy to use, I didn't hav a very good expeience using ELK or Logentries, but they are nice as well. With Graylogs you can easily create alerts for slack, graphs, filter incoming logs, create extraction rules and also processing pipelines, it really makes easier to read logs.
 
-- Creation a bot using hubot and connect to a chat platform (I have experience with RocketChat, Slack and mattermost) to automate some tasks, like triggering a C.I job or a deploy or even creation of review apps.
+- I woud like to have created a bot using Hubot and connect him to a chat platform (I already did this with RocketChat, Slack and mattermost) to automate some tasks, like triggering a C.I job or a deploy or even creation of review apps.
 
-- Adding a prometheus metrics endpoint to fortune app or tracing with Jaeger, because it's easier to track metrics from the application, I mean code métrics like execution time, database wait time and so on.
+- Adding a prometheus metrics endpoint to fortune app or add tracing using Jaeger, because it's easier to track metrics from the application, I mean code metrics like execution time, database wait time and so on.
 
-- Adding performance tests to C.I, to find breakpoints, memory leaks and would be nice to diff between memory snapshots to check if the resource usage has increased or decreased.
+- Adding performance tests to C.I pipeline  to find load breakpoints, memory leaks and would be nice to see difference between memory snapshots.
 
 - Static code analysis is a nice to have!
 
@@ -164,19 +171,24 @@ Kubernetes scrape config is consuming Kubernetes api (also a service account for
 
 # What needs improvement?
 
-- The deployer script, is required to have an existent deployment in order to the script be successful, also it doesn't clean broken deployments.
+- The deployer script requires to have an existent deployment in order to the script be successful, also it doesn't clean broken deployments.
 
 - Ansible shouldn't be deploying instances on AWS, Terraform is better to do this
 
-- A default AMI with everything I need to run all sorts of apps, in order to have a faster instance creation.
+- A default OS snapshot with everything I need to run all sorts of apps, in order to have a faster instance creation.
 
-- Better Kubernetes roles
+- Better Kubernetes roles.
 
-- Better secret management, using Hashicorp's Vault is nice!
+- Use Hashicorp Vault for better secret management.
 
 - Create more tests scenarios for both apps.
 
-- Create a rate limit for saving messages and retrieving them
+- Create a rate limit for saving and retrieving messages.
 
-- 
+- Create automated backups for mongodb, prometheus and Grafana.
+  
+- Create alerts for slack and pushover.
+
+
+
 
