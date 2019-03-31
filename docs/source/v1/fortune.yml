@@ -1,0 +1,41 @@
+  /v1/fortune/random:
+    get:
+      tags:
+        - fortune-message
+      description: Fetch a random fortune message
+      operationId: Get message
+      responses:
+        '200':
+          description: A single random fortune message
+          content:
+            application/json:
+              schema:
+                $ref: '#/models/FortuneMessageResponse'
+        '204':
+          description: "No messages found"
+          $ref: '#/responses/NoContent'
+        '500':
+          description: "Something wad wrong with the server"
+          $ref: '#/responses/InternalServerError'
+
+  /v1/fortune:
+    post:
+      tags:
+        - fortune-message
+      operationId: Save new message
+      description: Save a new message to the fortune app server
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/models/FortuneMessageRequest'
+      responses:
+        '200':
+          description: Message saved
+        '400':
+          description: "The message already exists, or your request body is wrong - ALways check the body message"
+          $ref: '#/responses/BadRequest'
+        '500':
+          description: "Something wad wrong with the server"
+          $ref: '#/responses/InternalServerError'

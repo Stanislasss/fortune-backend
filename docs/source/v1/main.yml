@@ -1,0 +1,55 @@
+openapi: "3.0.0"
+servers:
+  - url: https://app.fortune.opsadventures.com
+    description: Default server
+info:
+  description: |
+    This is the documentation of the fortune messages app api
+  version: 1.0.0
+  title: Fortune Messages App
+  contact:
+    name: Thiago Trennepohl
+    email: thiagotrennepohl@gmail.com
+    url: ""
+  x-logo:
+    url: ""
+    backgroundColor: "#FFFFFF"
+basePath: /v1
+tags:
+  - name: introduction
+    description: |
+      The fortune app messages is an app focused on inspiring people
+      ### Support
+      I try to to keep this API documentation up-to-date.
+      If you have questions on API routes not listed in this reference, please open an issue or contact one of the collaborators.
+      [Bug reports] in the documentation or the API are also welcome.
+      ### Contributing
+      If you wish to contribute to the Fortune Messages App project please contact me
+  - name: schema
+    description: |
+      All API access is through HTTP(S)`. All request and response bodies are `application/json`.
+x-tagGroups:
+  - name: Introduction
+    tags:
+      - introduction
+      - schema      
+  - name: Endpoints
+    tags:
+      - fortune-message
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+responses:
+  'NotFound':
+    description: Resource not found
+  'BadRequest':
+    description: Invalid or missing parameters in request body OR message already exists
+  'NoContent':
+    description: No content found
+  'InternalServerError':
+    description: Something went wrong with the server
+paths:

@@ -1,0 +1,122 @@
+openapi: "3.0.0"
+servers:
+  - url: https://app.fortune.opsadventures.com
+    description: Default server
+info:
+  description: |
+    This is the documentation of the fortune messages app api
+  version: 1.0.0
+  title: Fortune Messages App
+  contact:
+    name: Thiago Trennepohl
+    email: thiagotrennepohl@gmail.com
+  x-logo:
+    url: ""
+    backgroundColor: "#FFFFFF"
+basePath: /v1
+tags:
+  - name: introduction
+    description: |
+      The fortune app messages is an app focused on inspiring people
+      ### Support
+      I try to to keep this API documentation up-to-date.
+      If you have questions on API routes not listed in this reference, please open an issue or contact one of the collaborators.
+      [Bug reports] in the documentation or the API are also welcome.
+      ### Contributing
+      If you wish to contribute to the Fortune Messages App project please contact me
+  - name: schema
+    description: |
+      All API access is through HTTP(S)`. All request and response bodies are `application/json`.
+x-tagGroups:
+  - name: Introduction
+    tags:
+      - introduction
+      - schema      
+  - name: Endpoints
+    tags:
+      - download
+      - release
+      - version
+schemes:
+  - http
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+responses:
+  'NotFound':
+    description: Resource not found
+  'BadRequest':
+    description: Invalid or missing parameters in URL or request body
+  'NoContent':
+    description: No content found
+  'InternalServerError':
+    description: Something went wrong with the server
+paths:
+  /fortune/random:
+    get:
+      tags:
+        - fortune
+      description: Fetch a random fortune message
+      operationId: Get message
+      responses:
+        '200':
+          description: A single random fortune message
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/models/FortuneMessageRequest'
+        '204':
+          description: "No messages found"
+          $ref: '#/responses/NoContent'
+        '500':
+          description: "Something wad wrong with the server"
+          $ref: '#/responses/InternalServerError'
+
+  /fortune:
+    post:
+      tags:
+        - fortune-message
+      operationId: save
+      description: List of components ref
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/models/FortuneMessageResponse'
+      responses:
+        '200':
+          description: Message saved
+        '400':
+          description: "The message already exists, or your request body is wrong - ALways check the body message"
+          $ref: '#/responses/NoContent'
+        '500':
+          description: "Something wad wrong with the server"
+          $ref: '#/responses/InternalServerError'  
+  
+  models:
+    FortuneMessageRequest:
+      type: object
+      properties:
+        Mmssage:
+          description: The message content
+          type: string
+        id:
+          description: The message id (the only rule is to not container special chars)
+          type: string
+
+    FortuneMessageResponse:
+      type: object
+      properties:
+        Mmssage:
+          description: The message content
+          type: string
+        id:
+          description: The message id (the only rule is to not container special chars)
+          type: string
+        checksum:
+          description: "A checksum of the id and message"
+          type: string

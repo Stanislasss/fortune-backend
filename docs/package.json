@@ -1,0 +1,23 @@
+{
+  "name": "fortune-app",
+  "version": "1.0.0",
+  "description": "A simple application to inspire people",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:thiagotrennepohl/fortune-backend.git-docs.git"
+  },
+  "keywords": [
+    "docs",
+    "fortune-app",
+    "api"
+  ],
+  "author": "Thiago Trennepohl",
+  "license": "ISC",
+  "dependencies": {
+    "redoc-cli": "^0.8.3"
+  }
+}
