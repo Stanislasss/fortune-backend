@@ -9,4 +9,5 @@ RUN apk add --update git && go mod download && CGO_ENABLED=0 go build -a -instal
 FROM alpine
 WORKDIR /app
 COPY --from=builder /go/src/github.com/thiagotrennepohl/fortune-backend/main /app/main
+COPY --from=builder /go/src/github.com/thiagotrennepohl/fortune-backend/assets /app/assets
 ENTRYPOINT ./main

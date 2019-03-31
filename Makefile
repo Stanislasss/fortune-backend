@@ -34,11 +34,14 @@ do-cover: ## Test report
 
 cover: env do-cover env-stop ## [env do-cover env-stop]
 
+
 build: clean ## [clean test] Build binary file
 	docker build -t thiagotr/fortune-backend .
 
-docker: build ## Build Docker image
-	docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASSWORD}
+docker-login: ## [clean test] Build binary file
+	docker login -u ${DOCKER_LOGIN} -p ${DOCKER_PASSWORD} .
+
+docker-push: build docker-login ## Build Docker image
 	docker push thiagotr/fortune-backend
 
 help:
