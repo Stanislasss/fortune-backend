@@ -25,15 +25,15 @@ The goal of this app is to consume an API and show random fortune messages to th
 > DOCKER_LOGIN, DOCKER_PASSWORD and DOCKER_HUB_NAMESPACE environments are required
 
 ### Running on Travis C.I:
- > Note: Be careful with this command, it will apply changes to your cluster.
+ > Note: Be careful with this command, it might apply changes to your Kubernetes cluster.
 
 This repo already contains a `.travis.yml`
 
 `make ci`
 
-This command will install kubectl, configure kube a new config file under `~/.kube` and run `./scripts/deployer.sh`. The `deployer.sh` will attempt to perform a blue green deployment.
+This command will install kubectl, configure  a new Kubeconfig file under `~/.kube` and run `./scripts/deployer.sh`. The `deployer.sh` will attempt to perform a blue green deployment.
 
- > Note: In oder to the blue green deployment be succesful you must have an existent deployment named in this format <production|staging>-fortune-app-<green|blue>.
+ > Note: To the blue green deployment be succesful you must have an existent deployment named in this format <production|staging>-fortune-app-<green|blue>.
 
 In order to this command be succesfull you wil have to set up the following environment variables
 
