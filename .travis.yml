@@ -25,7 +25,7 @@ jobs:
         - sleep 15
       script: make test
     - stage: build
-      script: docker
+      script: make docker
     - stage: deploy
       script:
         - envsubst --help ##testing if it works
