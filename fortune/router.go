@@ -13,6 +13,7 @@ const (
 	RandomFortuneEndpoint         = "/v1/fortune/random"
 	SaveNewFortuneMessageEndpoint = "/v1/fortune"
 	HomeEndpoint                  = "/"
+	homepageTemplate              = "homepage.html"
 )
 
 var (
@@ -84,7 +85,10 @@ func (router *FortuneRouter) statusOKResponse(message models.Json, ctx echo.Cont
 func (router *FortuneRouter) home(ctx echo.Context) error {
 	randomMessage, err := router.fortuneService.FindRandom()
 	if err != nil {
-		return ctx.Render(http.StatusInternalServerError, "hello", "Ops, something went wrong, we couldn't get any fortune message :(")
+		if _, ok := err.(*models.ErrNotFound); ok {
+			return ctx.Render(http.StatusOK, homepageTemplate, models.Json{"Message": "No messages found :("})
+		}
+		return ctx.Render(http.StatusInternalServerError, homepageTemplate, "Ops, something went wrong, we couldn't get any fortune message :(")
 	}
-	return ctx.Render(http.StatusOK, "homepage.tmpl", randomMessage)
+	return ctx.Render(http.StatusOK, homepageTemplate, randomMessage)
 }
