@@ -51,7 +51,7 @@ In order to this command be succesfull you wil have to set up the following envi
 
  > Note: If you already have cert-manager running on your cluster, let's encrypt certs will be automatically created, if you don't you can follow this [guide](https://cert-manager.readthedocs.io/en/latest/getting-started/index.html).
 
-###### Start the service and ingress rules
+##### Start the service and ingress rules
 `DEPLOYMENT=blue ENVIRONMENT=production NAMESPACE=default envsubst < k8s_fortune_service.yml | kubectl apply -f -`
 
 ##### Start the pod
@@ -72,20 +72,22 @@ In order to this command be succesfull you wil have to set up the following envi
 
 ### Why Golang?
 
-It's my first language, so coding becomes fun and "produtivo", also Golang is very simple, very fast and easy to test.
+It's my first language, so coding becomes fun and productive, also Golang is very simple, very fast and easy to test.
 And not less important the community is great.
 
 
 ### motivations to have a seppareted service for the "scrapper" app
-  - In my previous experiences running a scheduled task in the same scope as the main application could result in data duplicity if not treated, then working with scalability  could be painful.
-  - Since it's a Small json being returned by the API I have decided to index all messages to a mongodb. In case of API failure my html page will continue to work normally.
-  - There's no need to add all messages everytime the app starts or pulls a repeated message, so i decided to create a checksum of the message and in case of content change a new message will be added to the database as well, also to avoid duplicated messages.
+  - In my previous experiences running a scheduled job in the same scope as the main application could result in data duplicity. If the cron job is not configurable working with scalability could be painful.
+  - Since it's a small json being returned by the API, I have decided to index all messages to a mongodb. If the source API goes through an outage, my html page will continue to work normally.
+  - To avoid repeated messages being added to the database, the app creates a checksum of the message and in case of content change a new message will be added.
   - There's also an option to run the scrapper as a cron job, but the minumum interval is 1 minute.
 
 ### CI/CD why I decided to use Travis
-  I have been using Jenkins for a long time, and I done many cool things using Jenkins, but few people feel motivated to build pipelines using Groovy or Jenkins pipeline syntax. for this test I deployed a Jenkins server, but gave up because it would take too much time.
+  I have been using Jenkins for a long time, and Jenkins helped me to create many cool things, but is not everyone that feedls motivated to build pipelines using Groovy or Jenkins pipeline syntax. 
+  
+  For this test I deployed a Jenkins server, but after a few hours I gave up and configured this project to be built by Travis, because it would take too much time to configure all pipelines and plugins.
 
-  On the other hand, Travis is already conected to Github, Yaml is the default pipeline syntax, it has easy secrets management (Jenkins also has), so it's very close to Gitlab C.I and was much easier to configure my pipelines and connect to Kubernetes and I didn't need to run Jenkins the "Docker in Docker" way.
+  On the other hand, Travis is already conected to Github, Yaml is the default pipeline syntax, it has easy secrets management (Jenkins also has) and it's very close to Gitlab C.I. It was much easier to configure my pipelines and connect to Kubernetes, the best part is that I didn't need to run Jenkins the "Docker in Docker" way.
 
 ### Kubernetes
 
