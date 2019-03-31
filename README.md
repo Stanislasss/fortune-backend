@@ -94,15 +94,15 @@ And not less important the community is great.
   I started deploying a few instances in AWS with Ansible, I was considering to run everything with Ansible/Teraform and the deploys were going to be using Docker's remote API, but Kubernetes makes easier to scale, manage and deploy new containers, in some of my previous experiences tracking servers FQDN was required in order to deploy new containers, well I don't need to do this with Kubernetes and also blue green deployments can be easily created.
   \< insert kubernetes repo here>
 
-  Kubernetes was deployed using [Kops](https://github.com/kelseyhightower/kubernetes-the-hard-way) but i strongly recommend to read this [repo](https://github.com/kubernetes/kops) beforing using automatic tools.
+  Kubernetes was deployed using [Kops](https://github.com/kelseyhightower/kubernetes-the-hard-way) and it's strongly recommended to read this [repo](https://github.com/kubernetes/kops) beforing using automatic tools.
 
-  Also was challenging  configuring cert-manager to issue https certificates automatically
+  Also the cert-manager (for automatic certificate creation) was very challenging.
 
-  At the moment Kubernetes is being used to run the fortune-app and fortune-scrapper only
+  At the moment Kubernetes is being used to run the fortune-app and fortune-scrapper only.
 
 ### Deploys
 
-As mentioned in the CI section, deploys are being made by Travis using a dedicated Service Account.
+As mentioned in the CI section, deploys are being made by Travis using a dedicated Kubernetes Service Account.
 
 The steps are very simple, I download the kubectl to travis machine, create the config based on the environments below:
 
