@@ -30,6 +30,5 @@ func main() {
 	fortuneRepository := fortune.NewFortuneRepository(sess)
 	fortuneService := fortune.NewFortuneService(fortuneRepository)
 	fortune.StartFortuneRouter(fortuneService, httpRouter)
-
 	httpRouter.Start(":4000")
 }

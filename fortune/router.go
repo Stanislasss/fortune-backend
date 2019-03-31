@@ -1,10 +1,12 @@
 package fortune
 
 import (
+	"html/template"
+	"io"
 	"net/http"
 
-	"github.com/thiagotrennepohl/fortune-backend/models"
 	"github.com/labstack/echo"
+	"github.com/thiagotrennepohl/fortune-backend/models"
 )
 
 const (
@@ -14,16 +16,23 @@ const (
 
 type FortuneRouter struct {
 	fortuneService FortuneService
+	templates      *template.Template
+}
+
+func (t *FortuneRouter) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	return t.templates.ExecuteTemplate(w, name, data)
 }
 
 func StartFortuneRouter(fortuneService FortuneService, router *echo.Echo) {
 
 	fortuneRouter := &FortuneRouter{
 		fortuneService: fortuneService,
+		templates:      template.Must(template.ParseGlob("assets/views/*.tmpl")),
 	}
-
+	router.Renderer = fortuneRouter
 	router.GET(RandomFortuneEndpoint, fortuneRouter.GetRandomFortuneMessage)
 	router.POST(SaveNewFortuneMessageEndpoint, fortuneRouter.SaveFortuneMessage)
+	router.GET("/", fortuneRouter.Home)
 }
 
 func (router *FortuneRouter) GetRandomFortuneMessage(ctx echo.Context) error {
@@ -65,4 +74,12 @@ func (router *FortuneRouter) internalServerErrorResponse(err error, ctx echo.Con
 
 func (router *FortuneRouter) statusOKResponse(message models.Json, ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, message)
+}
+
+func (router *FortuneRouter) Home(ctx echo.Context) error {
+	randomMessage, err := router.fortuneService.FindRandom()
+	if err != nil {
+		return ctx.Render(http.StatusInternalServerError, "hello", "Ops, something went wrong, we couldn't get any fortune message :(")
+	}
+	return ctx.Render(http.StatusOK, "homepage.tmpl", randomMessage)
 }
