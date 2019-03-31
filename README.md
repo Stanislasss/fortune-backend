@@ -9,7 +9,7 @@ The goal of this app is to consume an API and show random fortune messages to th
 
 
 ### Running locally
- > Note: to populate the database you also must run the scrapper, which can be found here
+ > Note: to populate the database you can also start the scrapper app, which can be found [here](https://github.com/thiagotrennepohl/fortune-scrapper).
 
 `docker-compose -f dev_fortune_app.yml up -d`
 
