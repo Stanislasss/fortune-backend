@@ -35,7 +35,7 @@ func init() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	templates := template.Must(template.ParseGlob("../assets/views/*.tmpl"))
+	templates := template.Must(template.ParseGlob("../assets/views/*.html"))
 	fortuneRepository = fortune.NewFortuneRepository(session)
 	fortuneService = fortune.NewFortuneService(fortuneRepository)
 	fortune.StartFortuneRouter(fortuneService, templates, router)
