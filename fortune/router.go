@@ -14,6 +14,10 @@ const (
 	SaveNewFortuneMessageEndpoint = "/v1/fortune"
 )
 
+var (
+	assetsFolder string
+)
+
 type FortuneRouter struct {
 	fortuneService FortuneService
 	templates      *template.Template
@@ -23,11 +27,11 @@ func (t *FortuneRouter) Render(w io.Writer, name string, data interface{}, c ech
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
-func StartFortuneRouter(fortuneService FortuneService, router *echo.Echo) {
+func StartFortuneRouter(fortuneService FortuneService, templates *template.Template, router *echo.Echo) {
 
 	fortuneRouter := &FortuneRouter{
 		fortuneService: fortuneService,
-		templates:      template.Must(template.ParseGlob("assets/views/*.tmpl")),
+		templates:      templates,
 	}
 	router.Renderer = fortuneRouter
 	router.GET(RandomFortuneEndpoint, fortuneRouter.GetRandomFortuneMessage)

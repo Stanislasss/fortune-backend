@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"os"
 
 	"github.com/globalsign/mgo"
@@ -26,9 +27,9 @@ func main() {
 	}
 
 	httpRouter := echo.New()
-
+	templates := template.Must(template.ParseGlob("assets/views/*.tmpl"))
 	fortuneRepository := fortune.NewFortuneRepository(sess)
 	fortuneService := fortune.NewFortuneService(fortuneRepository)
-	fortune.StartFortuneRouter(fortuneService, httpRouter)
+	fortune.StartFortuneRouter(fortuneService, templates, httpRouter)
 	httpRouter.Start(":4000")
 }

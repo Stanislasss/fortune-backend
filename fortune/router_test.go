@@ -3,6 +3,7 @@ package fortune_test
 import (
 	"bytes"
 	"encoding/json"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -34,9 +35,10 @@ func init() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+	templates := template.Must(template.ParseGlob("../assets/views/*.tmpl"))
 	fortuneRepository = fortune.NewFortuneRepository(session)
 	fortuneService = fortune.NewFortuneService(fortuneRepository)
-	fortune.StartFortuneRouter(fortuneService, router)
+	fortune.StartFortuneRouter(fortuneService, templates, router)
 
 }
 
