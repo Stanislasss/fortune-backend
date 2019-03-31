@@ -104,7 +104,12 @@ And not less important the community is great.
 
 As mentioned in the CI section, deploys are being made by Travis using a dedicated Kubernetes Service Account.
 
-The steps are very simple, I download the kubectl to travis machine, create the config based on the environments below:
+The steps are very simple, the command `make ci` does the following
+1. Download and install kubectl binary
+2. Create Kubeconfig file under `~/.kube/config`
+3. Run `deployer.sh`
+
+The below environments are used to create the Kubeconfig file.
 
 | Env              |               Description                |
 | ---------------- | :--------------------------------------: |
@@ -116,19 +121,19 @@ The steps are very simple, I download the kubectl to travis machine, create the 
 | K8S_CLIENT_KEY   |      Svc Account base64 encoded Key      |
 
 
-And then I run the `deployer.sh` script which detects if a `green` or a `blue` "version" of the fortune app is running, it then creates a new deployment, after k8s performs the healthcheck defined in the Deployment spec the script checks if the number of desired pods are online, then i update the service to route all requests to the newly deployed pod and finally the old deployment is deleted.
+The `deployer.sh` script which detects if a `green` or a `blue` "version" of the fortune app is running. after that a new deployment is created, then the script waits 30 seconds for any pre-configured healthchecks (kubernetes healthcheck configuration),after that the number of desired and ready pods is checked. and then the service is updated to route all requests to the newly deployed pod and finally the old deployment is deleted.
 
 ### Why MongoDB and Why not to run on Kubernetes?
 
-I decided to use MongoDB because there's no relationship in the data I'm storing, also it has great performance to read and write (be careful with updates) and I have experience managing mongodb replicasets.
+I decided to use MongoDB because there's no relationship in the data being stored, also because of the befits of great performance to read and write  data(be careful with updates) and some my previous experiences managing mongodb replicasets.
 
 ##### Why mongodb is not running on kubernetes?
 
-I know that kubernetes has StatefulSets and is great in keeping services separated by node and online, it just take a little bit of configuration and time.
+I know that kubernetes has StatefulSets and is great in keeping services separated by node and online, it just take a little bit of configuration and time and you are able to run databases on K8S.
 
-But I never ran stateful services on kubernetes before and I think it might be dangerous if not configured very carefully, because it's not a machine or volume you can siimply delete and deploy again, sometimes many services are relying on the same mongodb and replicaset elections can be tricky, so you need to be careful with data.
+But I never ran stateful services on kubernetes before and I think it might be dangerous if not configured very carefully, because it's not a machine or volume you can siimply delete and deploy again, sometimes many services are relying on the same mongodb. And not less important, replicaset elections can be tricky, so you need to be careful to not ruin your data.
 
-Keeping mongodb in a isolated machine with ssd or io1 diks, a disk for journal, another one for logs and another one for data (to avoid write and read concurrency) seems very safe to me.
+Keeping mongodb in a isolated machine with ssd or io1 diks is great because you can easily set a disk for journal, one for logs and another one for data (to avoid write and read concurrency).
 
 ### Prometheus and Grafana
 
