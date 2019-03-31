@@ -91,7 +91,7 @@ And not less important the community is great.
 
 ### Kubernetes
 
-  I started deploying a few machines in AWS with Ansible to run everything and I was going to deploy my services using Docker's remote API, but Kubernetes makes easier to scale, manage and deploy new containers, in some of my previous experiences i had to track servers FQDN in order to deploy new containers, well I don't need to do this with Kubernetes and also i can easily perform blue green deployments.
+  I started deploying a few instances in AWS with Ansible, I was considering to run everything with Ansible/Teraform and the deploys were going to be using Docker's remote API, but Kubernetes makes easier to scale, manage and deploy new containers, in some of my previous experiences tracking servers FQDN was required in order to deploy new containers, well I don't need to do this with Kubernetes and also blue green deployments can be easily created.
   \< insert kubernetes repo here>
 
   Kubernetes was deployed using [Kops](https://github.com/kelseyhightower/kubernetes-the-hard-way) but i strongly recommend to read this [repo](https://github.com/kubernetes/kops) beforing using automatic tools.
