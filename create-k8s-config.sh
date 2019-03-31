@@ -1,4 +1,4 @@
-echo -e "apiVersion: v1
+echo "apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: $(echo ${K8S_CERT})
