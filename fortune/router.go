@@ -13,7 +13,6 @@ const (
 	RandomFortuneEndpoint         = "/v1/fortune/random"
 	SaveNewFortuneMessageEndpoint = "/v1/fortune"
 	HomeEndpoint                  = "/"
-	DocsEndpoint                  = "/docs"
 )
 
 var (
@@ -39,7 +38,6 @@ func StartFortuneRouter(fortuneService FortuneService, templates *template.Templ
 	router.GET(RandomFortuneEndpoint, fortuneRouter.GetRandomFortuneMessage)
 	router.POST(SaveNewFortuneMessageEndpoint, fortuneRouter.SaveFortuneMessage)
 	router.GET(HomeEndpoint, fortuneRouter.home)
-	router.GET(DocsEndpoint, fortuneRouter.docs)
 }
 
 func (router *FortuneRouter) GetRandomFortuneMessage(ctx echo.Context) error {
@@ -89,8 +87,4 @@ func (router *FortuneRouter) home(ctx echo.Context) error {
 		return ctx.Render(http.StatusInternalServerError, "hello", "Ops, something went wrong, we couldn't get any fortune message :(")
 	}
 	return ctx.Render(http.StatusOK, "homepage.tmpl", randomMessage)
-}
-
-func (router *FortuneRouter) docs(ctx echo.Context) error {
-	return ctx.Render(http.StatusOK, "docs.tmpl", "")
 }

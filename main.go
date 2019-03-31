@@ -27,9 +27,11 @@ func main() {
 	}
 
 	httpRouter := echo.New()
-	templates := template.Must(template.ParseGlob("assets/views/*.tmpl"))
+	templates := template.Must(template.ParseGlob("assets/views/*.html"))
 	fortuneRepository := fortune.NewFortuneRepository(sess)
 	fortuneService := fortune.NewFortuneService(fortuneRepository)
 	fortune.StartFortuneRouter(fortuneService, templates, httpRouter)
+
+	httpRouter.Static("/docs", "assets/docs")
 	httpRouter.Start(":4000")
 }
