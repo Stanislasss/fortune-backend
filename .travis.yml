@@ -30,5 +30,6 @@ jobs:
       script:
         - envsubst --help ##testing if it works
         - make create-kube-config
+        - cat ~/.kube/config
         - make install-kubectl
         - make blue-green
