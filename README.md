@@ -83,11 +83,11 @@ And not less important the community is great.
   - There's also an option to run the scrapper as a cron job, but the minumum interval is 1 minute.
 
 ### CI/CD why I decided to use Travis
-  I have been using Jenkins for a long time, and Jenkins helped me to create many cool things, but is not everyone that feedls motivated to build pipelines using Groovy or Jenkins pipeline syntax. 
+  I have been using Jenkins for a long time, and Jenkins helped me to create many cool things, but is not everyone that feels motivated to build pipelines using Groovy or Jenkins pipeline syntax. 
   
   For this test I deployed a Jenkins server, but after a few hours I gave up and configured this project to be built by Travis, because it would take too much time to configure all pipelines and plugins.
 
-  On the other hand, Travis is already conected to Github, Yaml is the default pipeline syntax, it has easy secrets management (Jenkins also has) and it's very close to Gitlab C.I. It was much easier to configure my pipelines and connect to Kubernetes, the best part is that I didn't need to run Jenkins the "Docker in Docker" way.
+  On the other hand, Travis is already connected to Github, Yaml is the default pipeline syntax, it has easy secrets management (Jenkins also has) and it's very close to Gitlab C.I. It was much easier to configure my pipelines and connect to Kubernetes, the best part is that I didn't need to run Jenkins the "Docker in Docker" way.
 
 ### Kubernetes
 
@@ -131,7 +131,7 @@ I decided to use MongoDB because there's no relationship in the data being store
 
 I know that kubernetes has StatefulSets and is great in keeping services separated by node and online, it just take a little bit of configuration and time and you are able to run databases on K8S.
 
-But I never ran stateful services on kubernetes before and I think it might be dangerous if not configured very carefully, because it's not a machine or volume you can siimply delete and deploy again, sometimes many services are relying on the same mongodb. And not less important, replicaset elections can be tricky, so you need to be careful to not ruin your data.
+But I never ran stateful services on kubernetes before and I think it might be dangerous if not configured very carefully, because it's not a machine or volume you can simply delete and deploy again, sometimes many services are relying on the same mongodb. And not less important, replicaset elections can be tricky, so you need to be careful to not ruin your data.
 
 Keeping mongodb in a isolated machine with ssd or io1 diks is safe, because you can easily set a disk for journal, one for logs and another one for data (to avoid write and read concurrency).
 
