@@ -1,6 +1,6 @@
 # Fortune App ![alt](https://travis-ci.org/thiagotrennepohl/fortune-backend.svg?branch=master)
 
-The goal of this app is to consume an API and show random fortune messages to the user.
+The goal of this app is to consume an API and show a random fortune message to the user.
 
 
 ## API reference
@@ -29,11 +29,9 @@ The goal of this app is to consume an API and show random fortune messages to th
 
 This repo already contains a `.travis.yml`
 
-`make ci`
+the command `make ci` will install kubectl, configure a new Kubeconfig file under `~/.kube` and run `./scripts/deployer.sh`. The `deployer.sh` will attempt to perform a blue-green deployment.
 
-This command will install kubectl, configure a new Kubeconfig file under `~/.kube` and run `./scripts/deployer.sh`. The `deployer.sh` will attempt to perform a blue-green deployment.
-
- > Note: For the blue-green deployment be successful you must have an existent deployment named in this format <production|staging>-fortune-app-<green|blue>.
+ > Note: For the blue-green deployment be successful you must have an existent deployment named in this format <production||staging>-fortune-app-<green||blue>.
 
 In order to this command be successful you will have to set up the following environment variables
 
@@ -80,7 +78,7 @@ For both projects, the design was based on the clean architecture pattern for it
 If something needs to be changed (in this case only the database) it won't be a problem because all layers are connected through interfaces and using models(Structs) as "DTO".
 
 ### motivations to have a separate service for the "scrapper" app
-  - In my previous experiences running a scheduled job in the same scope as the main application could result in data duplicity. If the cron job is not configurable working with scalability could be painful.
+  - In my previous experiences running a scheduled job in the same scope as the main application could result in data duplicity. If the cron job is not configurable, working with scalability could be painful.
   - Since it's a small json being returned by the API, I have decided to index all messages to a MongoDB. If the source API goes through an outage, my HTML page will continue to work normally.
   - To avoid repeated messages being added to the database, the app creates a checksum of the message and in case of content change, a new message will be added.
   - There's also an option to run the scrapper as a cron job, but the minimum interval is 1 minute.
@@ -93,9 +91,11 @@ If something needs to be changed (in this case only the database) it won't be a 
   On the other hand, Travis is already connected to Github, Yaml is the default pipeline syntax, it has easy secrets management (Jenkins also has) and it's very close to Gitlab C.I. It was much easier to configure my pipelines and connect to Kubernetes, the best part is that I didn't need to run Jenkins the "Docker in Docker" way.
 
   The C.D steps are very simple, the command `make ci` does the following
-  1. Download and install kubectl binary
-  2. Create Kubeconfig file under `~/.kube/config`
-  3. Run `deployer.sh`
+  1. Run tests
+  2. Docker build and push
+  3. Download and install kubectl binary
+  4. Create Kubeconfig file under `~/.kube/config`
+  5. Run `deployer.sh`
 
   The below environments are used to create the Kubeconfig file.
 
@@ -156,6 +156,15 @@ More info about infrastructure can be found [here](https://github.com/thiagotren
 
 - First of all, deploying a **Graylogs** or have used a managed logs service. I've been using **Graylogs** for more than 3 years and it's very easy to use, I didn't have a very good experience using ELK or Logentries, but they are nice as well. With Graylogs you can easily create alerts for slack, graphs, filter incoming logs, create extraction rules and also processing pipelines, it really makes easier to read logs.
 
+- Having a log aggregation service doesn't mean your log will meaningful, for this reason I would like to have written structured logs, using logrus and pre-defined log moddels something to achieve the following structure.
+  
+  - Error Message
+  - file
+  - level
+  - line
+  - source
+  - timestamp
+
 - I would like to have created a bot using Hubot and connect him to a chat platform (I already did this with RocketChat, Slack and Mattermost) to automate some tasks, like triggering a C.I job or deploy or even creation of review apps.
 
 - Adding a Prometheus metrics endpoint to fortune app or add tracing using Jaeger, because it's easier to track metrics from the application, I mean code metrics like execution time, database wait time and so on.
@@ -167,6 +176,8 @@ More info about infrastructure can be found [here](https://github.com/thiagotren
 - Testing fresh docker build is important as well!
 
 - Testing ansible roles using Molecule would be nice.
+
+
 
 
 # What needs improvement?
@@ -193,7 +204,7 @@ More info about infrastructure can be found [here](https://github.com/thiagotren
 
 - Add comments on top of Public variables, functions and Structs (Golang good patice)
   
--
+- Better handling of environment variables.
 
 
 
