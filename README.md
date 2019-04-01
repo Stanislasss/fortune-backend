@@ -1,4 +1,4 @@
-# Fortune App
+# Fortune App  ![alt](https://travis-ci.org/thiagotrennepohl/fortune-scrapper.svg?branch=master)
 
 The goal of this app is to consume an API and show random fortune messages to the user.
 
