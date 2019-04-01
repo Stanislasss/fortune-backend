@@ -177,6 +177,8 @@ More info about infrastructure can be found [here](https://github.com/thiagotren
 
 - Testing ansible roles using Molecule would be nice.
 
+- Deploying an OpenVPN instance so I can access AWS servers by their private ip.
+
 
 
 
