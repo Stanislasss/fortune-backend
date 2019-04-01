@@ -75,6 +75,9 @@ In order to this command be successful you will have to set up the following env
 It's my first language, so coding becomes fun and productive, also Golang is very simple, very fast and easy to test.
 And not less important the community is great.
 
+For both projects, the design was based on the clean architecture pattern for its simplicity, and easiness for testing and as a good Go practice, the package `fortune` can be imported into another project without breaking anything.
+
+If something needs to be changed (in this case only the database) it won't be a problem because all layers are connected through interfaces and using models(Structs) as "DTO".
 
 ### motivations to have a separate service for the "scrapper" app
   - In my previous experiences running a scheduled job in the same scope as the main application could result in data duplicity. If the cron job is not configurable working with scalability could be painful.
@@ -89,6 +92,25 @@ And not less important the community is great.
 
   On the other hand, Travis is already connected to Github, Yaml is the default pipeline syntax, it has easy secrets management (Jenkins also has) and it's very close to Gitlab C.I. It was much easier to configure my pipelines and connect to Kubernetes, the best part is that I didn't need to run Jenkins the "Docker in Docker" way.
 
+  The C.D steps are very simple, the command `make ci` does the following
+  1. Download and install kubectl binary
+  2. Create Kubeconfig file under `~/.kube/config`
+  3. Run `deployer.sh`
+
+  The below environments are used to create the Kubeconfig file.
+
+  | Env              |               Description                |
+  | ---------------- | :--------------------------------------: |
+  | K8S_CERT         | Kubernetes CA certificate base64 encoded |
+  | K8S_CLUSTER_ADDR |          Kubernetes API address          |
+  | K8S_CLUSTER_NAME |         Kubernetes cluster name          |
+  | K8S_USERNAME     | Service Account with enough permissions  |
+  | K8S_CLIENT_CERT  |     Svc Account base64 encoded Cert      |
+  | K8S_CLIENT_KEY   |      Svc Account base64 encoded Key      |
+
+
+  The `deployer.sh` script which detects if a `green` or a `blue` "version" of the fortune app is running. after that a new deployment is created, then the script waits 30 seconds for any pre-configured health checks (kubernetes health check configuration), after that the number of desired and ready pods is checked. and then the service is updated to route all requests to the newly deployed pod and finally, the old deployment is deleted.
+
 ### Kubernetes
 
   I started deploying a few instances in AWS with Ansible, I was considering to run everything with Ansible/Terraform and the deploys were going to be using Docker's remote API, but Kubernetes makes easier to scale, manage and deploy new containers, in some of my previous experiences tracking servers FQDN was required in order to deploy new containers, well I don't need to do this with Kubernetes and also blue-green deployments can be easily created.
@@ -100,28 +122,6 @@ And not less important the community is great.
 
   At the moment Kubernetes is being used to run the fortune-app and fortune-scrapper only.
 
-### Deploys
-
-As mentioned in the CI section, deploys are being made by Travis using a dedicated Kubernetes Service Account.
-
-The steps are very simple, the command `make ci` does the following
-1. Download and install kubectl binary
-2. Create Kubeconfig file under `~/.kube/config`
-3. Run `deployer.sh`
-
-The below environments are used to create the Kubeconfig file.
-
-| Env              |               Description                |
-| ---------------- | :--------------------------------------: |
-| K8S_CERT         | Kubernetes CA certificate base64 encoded |
-| K8S_CLUSTER_ADDR |          Kubernetes API address          |
-| K8S_CLUSTER_NAME |         Kubernetes cluster name          |
-| K8S_USERNAME     | Service Account with enough permissions  |
-| K8S_CLIENT_CERT  |     Svc Account base64 encoded Cert      |
-| K8S_CLIENT_KEY   |      Svc Account base64 encoded Key      |
-
-
-The `deployer.sh` script which detects if a `green` or a `blue` "version" of the fortune app is running. after that a new deployment is created, then the script waits 30 seconds for any pre-configured health checks (kubernetes health check configuration), after that the number of desired and ready pods is checked. and then the service is updated to route all requests to the newly deployed pod and finally, the old deployment is deleted.
 
 ### Why MongoDB and Why not to run on Kubernetes?
 
@@ -188,6 +188,12 @@ More info about infrastructure can be found [here](https://github.com/thiagotren
 - Create automated backups for MongoDB, and Grafana.
   
 - Create alerts for slack and pushover.
+  
+- Improve usage of constants
+
+- Add comments on top of Public variables, functions and Structs (Golang good patice)
+  
+-
 
 
 
