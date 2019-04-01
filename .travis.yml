@@ -27,6 +27,7 @@ jobs:
     - stage: build
       script: make docker-push
     - stage: deploy
+      if: branch = master
       script:
         - envsubst --help ##testing if it works
         - make create-kube-config
