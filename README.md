@@ -208,6 +208,8 @@ More info about infrastructure can be found [here](https://github.com/thiagotren
   
 - Better handling of environment variables.
 
+- Improve Travis C.I steps to deploy new pods only when a release is created.
+
 
 
 
