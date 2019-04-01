@@ -114,7 +114,6 @@ If something needs to be changed (in this case only the database) it won't be a 
 ### Kubernetes
 
   I started deploying a few instances in AWS with Ansible, I was considering to run everything with Ansible/Terraform and the deploys were going to be using Docker's remote API, but Kubernetes makes easier to scale, manage and deploy new containers, in some of my previous experiences tracking servers FQDN was required in order to deploy new containers, well I don't need to do this with Kubernetes and also blue-green deployments can be easily created.
-  \< insert kubernetes repo here>
 
   Kubernetes was deployed using [Kops](https://github.com/kelseyhightower/kubernetes-the-hard-way) and it's strongly recommended to read this [repo](https://github.com/kubernetes/kops) before using automatic tools.
 
