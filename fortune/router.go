@@ -11,6 +11,7 @@ import (
 
 const (
 	RandomFortuneEndpoint         = "/v1/fortune/random"
+	AllFortuneEndpoint         = "/v1/fortune/all"
 	SaveNewFortuneMessageEndpoint = "/v1/fortune"
 	HomeEndpoint                  = "/"
 	homepageTemplate              = "homepage.html"
@@ -39,6 +40,7 @@ func StartFortuneRouter(fortuneService FortuneService, templates *template.Templ
 	router.GET(RandomFortuneEndpoint, fortuneRouter.GetRandomFortuneMessage)
 	router.POST(SaveNewFortuneMessageEndpoint, fortuneRouter.SaveFortuneMessage)
 	router.GET(HomeEndpoint, fortuneRouter.home)
+	router.GET(AllFortuneEndpoint, fortuneRouter.GetAll)
 }
 
 func (router *FortuneRouter) GetRandomFortuneMessage(ctx echo.Context) error {
@@ -50,6 +52,14 @@ func (router *FortuneRouter) GetRandomFortuneMessage(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, models.Json{"Message": err.Error()})
 	}
 	return ctx.JSON(http.StatusOK, message)
+}
+
+func (router *FortuneRouter) GetAll(ctx echo.Context) error {
+	messages, err := router.fortuneService.GetAll()
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, models.Json{"Message": err.Error()})
+	}
+	return ctx.JSON(http.StatusOK, messages)
 }
 
 func (router *FortuneRouter) SaveFortuneMessage(ctx echo.Context) error {

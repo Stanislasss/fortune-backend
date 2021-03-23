@@ -39,3 +39,23 @@
         '500':
           description: "Something wad wrong with the server"
           $ref: '#/responses/InternalServerError'
+
+  /v1/fortune/all:
+    get:
+      tags:
+        - fortune-message
+      operationId: Gets all messages
+      description: Gets all messages
+      responses:
+        '200':
+          description: A single random fortune message
+          content:
+            application/json:
+              schema:
+                $ref: '#/models/FortuneMessageListResponse'
+        '400':
+          description: "The message already exists, or your request body is wrong - ALways check the body message"
+          $ref: '#/responses/BadRequest'
+        '500':
+          description: "Something wad wrong with the server"
+          $ref: '#/responses/InternalServerError'

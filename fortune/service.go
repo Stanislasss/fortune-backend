@@ -45,6 +45,10 @@ func (svc *fortuneService) Save(message models.FortuneMessage) error {
 	return svc.repository.Save(message)
 }
 
+func (svc *fortuneService) GetAll() ([]models.FortuneMessage, error){
+	return svc.repository.FindAll()
+}
+
 func (svc *fortuneService) FindRandom() (models.FortuneMessage, error) {
 	aggregationQuery := []models.FortuneQuery{
 		models.FortuneQuery{

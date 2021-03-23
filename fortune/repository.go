@@ -2,6 +2,7 @@ package fortune
 
 import (
 	"encoding/json"
+	"github.com/globalsign/mgo/bson"
 
 	"github.com/thiagotrennepohl/fortune-backend/models"
 	"github.com/globalsign/mgo"
@@ -27,6 +28,24 @@ func (db *fortuneRepository) FindOne(query models.FortuneQuery) (models.FortuneM
 	connection := session.DB("").C(fortuneMessagesCollection)
 
 	err := connection.Find(query).One(&message)
+	if err != nil {
+		if err == mgo.ErrNotFound {
+			return message, &models.ErrNotFound{}
+		}
+		return message, err
+	}
+
+	return message, err
+}
+
+func (db *fortuneRepository) FindAll() ([]models.FortuneMessage, error) {
+	var message []models.FortuneMessage
+	session := db.dbSession.Copy()
+	defer session.Close()
+
+	connection := session.DB("").C(fortuneMessagesCollection)
+
+	err := connection.Find(bson.M{}).All(&message)
 	if err != nil {
 		if err == mgo.ErrNotFound {
 			return message, &models.ErrNotFound{}

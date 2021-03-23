@@ -95,8 +95,26 @@ paths:
           $ref: '#/responses/NoContent'
         '500':
           description: "Something wad wrong with the server"
-          $ref: '#/responses/InternalServerError'  
-  
+          $ref: '#/responses/InternalServerError'
+
+  /fortune/all:
+    get:
+      tags:
+        - fortune-message
+      operationId: getall
+      description: List of components ref
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/models/FortuneMessageResponse'
+      responses:
+        '200':
+          description: A list of fortune messages
+        '500':
+          description: "Something wad wrong with the server"
+          $ref: '#/responses/InternalServerError
+
   models:
     FortuneMessageRequest:
       type: object
@@ -120,3 +138,18 @@ paths:
         checksum:
           description: "A checksum of the id and message"
           type: string
+
+    FortuneMessageListResponse:
+      type: array
+      items:
+        type: object
+      properties:
+        Mmssage:
+          description: The message content
+          type: string
+        id:
+          description: The message id (the only rule is to not container special chars)
+          type: string
+        checksum:
+          description: "A checksum of the id and message"
+          type: string'

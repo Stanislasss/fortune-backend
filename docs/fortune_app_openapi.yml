@@ -94,6 +94,26 @@ paths:
         '500':
           description: "Something wad wrong with the server"
           $ref: '#/responses/InternalServerError'
+
+  /v1/fortune/all:
+    get:
+      tags:
+        - fortune-message
+      operationId: Gets all messages
+      description: Gets all messages
+      responses:
+        '200':
+          description: A single random fortune message
+          content:
+            application/json:
+              schema:
+                $ref: '#/models/FortuneMessageListResponse'
+        '400':
+          description: "The message already exists, or your request body is wrong - ALways check the body message"
+          $ref: '#/responses/BadRequest'
+        '500':
+          description: "Something wad wrong with the server"
+          $ref: '#/responses/InternalServerError'
 models:
   FortuneMessageRequest:
     type: object
@@ -117,3 +137,18 @@ models:
       checksum:
         description: "A checksum of the id and message"
         type: string
+
+  FortuneMessageListResponse:
+    type: array
+    items:
+      $ref: '#/models/FortuneMessageResponse'
+    properties:
+      Mmssage:
+        description: The message content
+        type: string
+      id:
+        description: The message id (the only rule is to not container special chars)
+        type: string
+      checksum:
+        description: "A checksum of the id and message"
+        type: string'

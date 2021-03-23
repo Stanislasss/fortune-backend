@@ -1,0 +1,18 @@
+GET http://localhost:80/api/item?id=99
+Accept: application/json
+
+###
+POST http://localhost:4000/v1/fortune
+Content-Type: application/json
+
+{
+  "Message": "What's the color of the sun123?",
+  "Answer": "Yellow",
+  "id": "1234567"
+}
+
+###
+GET http://localhost:4000/v1/fortune/all
+Content-Type: application/json
+
+

@@ -21,3 +21,18 @@ models:
       checksum:
         description: "A checksum of the id and message"
         type: string
+
+  FortuneMessageListResponse:
+    type: array
+    items:
+      $ref: '#/models/FortuneMessageResponse'
+    properties:
+      Mmssage:
+        description: The message content
+        type: string
+      id:
+        description: The message id (the only rule is to not container special chars)
+        type: string
+      checksum:
+        description: "A checksum of the id and message"
+        type: string'
